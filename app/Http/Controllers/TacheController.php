@@ -27,15 +27,25 @@ class TacheController extends Controller
     }
 
    
+public function edit(Tache $tache)
+{
+    return view('tache.edit', compact('tache'));
+}
 
-    public function update(Request $request, Tache $tache) // ← SINGULIER
-    {
-        $tache->update([
-            'completed' => !$tache->completed
-        ]);
+public function update(Request $request, Tache $tache)
+{
+    $request->validate([
+        'title' => 'required'
+    ]);
 
-        return back();
-    }
+    $tache->update([
+        'title' => $request->title,
+        'completed' => $tache->completed
+    ]);
+
+    return redirect()->route('tache.index')
+                     ->with('success', 'Tâche modifiée avec succès');
+}
 
 
     public function destroy(Tache $tache)

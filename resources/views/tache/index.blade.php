@@ -39,6 +39,13 @@
 
                         <div class="flex items-center gap-4">
 
+                            
+                            {{-- Bouton Modifier --}}
+                            <a href="{{ route('tache.edit', $tache) }}"
+                            class="text-blue-500 hover:text-blue-700 text-xl">
+                                ✏
+                            </a>
+
                             {{-- Toggle --}}
                             <form action="{{ route('tache.update', $tache) }}" method="POST">
                                 @csrf
