@@ -1,35 +1,60 @@
 <x-app-layout>
+    <div class="max-w-2xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-6">
 
+        <h1 class="text-2xl font-bold mb-6 text-gray-800">
+            📋 Mes tâches
+        </h1>
 
-<div class="container">
-    <h2>Mes Tâches</h2>
+        {{-- Formulaire ajout --}}
+        <form action="{{ route('tache.store') }}" method="POST" class="flex gap-3 mb-6">
+            @csrf
+            <input
+                type="text"
+                name="title"
+                placeholder="Nouvelle tâche..."
+                class="flex-1 rounded-lg border-gray-300 focus:ring focus:ring-indigo-200"
+                required
+            >
+            <button
+                type="submit"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition"
+            >
+                Ajouter
+            </button>
+        </form>
 
-    <form action="{{ route('tache.store') }}" method="POST">
-        @csrf
-        <input type="text" name="title" placeholder="Nouvelle tâche">
-        <button type="submit">Ajouter</button>
-    </form>
+        {{-- Liste des tâches --}}
+        <ul class="space-y-3">
+            @foreach($taches as $tache)
+                <li class="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
 
-    <ul>
-        @foreach($taches as $tache)
-            <li>
-                <form action="{{ route('tache.update', $tache) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('PUT')
-                    <button type="submit">
-                        {{ $tache->completed ? '✔' : '❌' }}
-                    </button>
-                </form>
+                    <div class="flex items-center gap-3">
+                        {{-- Toggle --}}
+                        <form action="{{ route('tache.update', $tache) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button class="text-xl">
+                                {{ $tache->completed ? '✅' : '⬜' }}
+                            </button>
+                        </form>
 
-                {{ $tache->title }}
+                        <span class="{{ $tache->completed ? 'line-through text-gray-400' : '' }}">
+                            {{ $tache->title }}
+                        </span>
+                    </div>
 
-                <form action="{{ route('tache.destroy', $tache) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Supprimer</button>
-                </form>
-            </li>
-        @endforeach
-    </ul>
-</div>
+                    {{-- Supprimer --}}
+                    <form action="{{ route('tache.destroy', $tache) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button class="text-red-500 hover:text-red-700">
+                            🗑️
+                        </button>
+                    </form>
+
+                </li>
+            @endforeach
+        </ul>
+
+    </div>
 </x-app-layout>
