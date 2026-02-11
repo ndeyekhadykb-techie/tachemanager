@@ -26,18 +26,34 @@ class TacheController extends Controller
         return redirect()->route('tache.index');
     }
 
-    public function destroy(Tache $taches)
-    {
-        $taches->delete();
-        return back();
-    }
+   
 
-    public function update(Request $request, Tache $taches)
+    public function update(Request $request, Tache $tache) // ← SINGULIER
     {
-        $taches->update([
-            'completed' => !$taches->completed
+        $tache->update([
+            'completed' => !$tache->completed
         ]);
 
         return back();
     }
+
+
+    public function destroy(Tache $tache)
+{
+    if ($tache->user_id !== auth()->id()) {
+        abort(403);
+    }
+
+    $tache->delete();
+    return back();
+}
+
+
+
+
+
+
+
+
+
 }
