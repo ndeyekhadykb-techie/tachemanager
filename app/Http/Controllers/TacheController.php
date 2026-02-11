@@ -8,8 +8,8 @@ class TacheController extends Controller
 {
     public function index()
     {
-        $tache = auth()->user()->tache;
-        return view('tache.index', compact('tache'));
+        $taches = auth()->user()->taches;
+        return view('tache.index', compact('taches'));
     }
 
     public function store(Request $request)
@@ -18,23 +18,23 @@ class TacheController extends Controller
             'title' => 'required'
         ]);
 
-        auth()->user()->tasks()->create([
+        auth()->user()->tache()->create([
             'title' => $request->title
         ]);
 
         return redirect()->route('tache.index');
     }
 
-    public function destroy(Tache $tache)
+    public function destroy(Tache $taches)
     {
-        $tache->delete();
+        $taches->delete();
         return back();
     }
 
-    public function update(Request $request, Tache $tache)
+    public function update(Request $request, Tache $taches)
     {
-        $tache->update([
-            'completed' => !$tache->completed
+        $taches->update([
+            'completed' => !$taches->completed
         ]);
 
         return back();
