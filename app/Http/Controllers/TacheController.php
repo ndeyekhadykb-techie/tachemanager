@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tache;
 use Illuminate\Http\Request;
 
 class TacheController extends Controller
@@ -18,7 +19,7 @@ class TacheController extends Controller
             'title' => 'required'
         ]);
 
-        auth()->user()->tache()->create([
+        auth()->user()->taches()->create([
             'title' => $request->title
         ]);
 
