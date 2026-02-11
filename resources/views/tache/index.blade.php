@@ -1,6 +1,6 @@
-@extends('layouts.app')
+<x-app-layout>
 
-@section('content')
+
 <div class="container">
     <h2>Mes Tâches</h2>
 
@@ -32,4 +32,4 @@
         @endforeach
     </ul>
 </div>
-@endsection
+</x-app-layout>
